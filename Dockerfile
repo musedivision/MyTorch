@@ -1,8 +1,9 @@
 FROM jupyter/minimal-notebook
 
-# install packages
-RUN conda install pytorch torchvision -c pytorch
+# install pytorch
+RUN conda install pytorch -c pytorch
 
+# install dependencies
 RUN echo "\
 matplotlib==2.1.2 \n\
 notebook==5.4.0 \n\
