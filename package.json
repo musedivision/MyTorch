@@ -1,0 +1,20 @@
+{
+  "name": "mytorch",
+  "version": "1.0.0",
+  "description": "Learning me some PyTorch",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker run --rm -p 8889:8888 -v \"$PWD/volume\":/home/jovyan musedivision/mytorch start-notebook.sh --NotebookApp.token=\"\" --NotebookApp.password=\"\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musedivision/MyTorch.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/musedivision/MyTorch/issues"
+  },
+  "homepage": "https://github.com/musedivision/MyTorch#readme"
+}
