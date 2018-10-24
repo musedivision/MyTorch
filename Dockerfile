@@ -9,6 +9,7 @@ matplotlib==2.1.2 \n\
 notebook==5.4.0 \n\
 numpy==1 .14.0 \n\
 pandas==0.22.0 \n\
+tqdm==4.28.1 \n\
 pathlib2==2.3.0" > /tmp/requirements.txt
 
 RUN conda install --yes --file /tmp/requirements.txt && \
