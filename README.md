@@ -1,5 +1,7 @@
 # MyTorch
 
+[![](https://dockerbuildbadges.quelltext.eu/status.svg?organization=musedivision&repository=mytorch)](https://hub.docker.com/r/musedivision/mytorch/builds/)   
+
 Learning me some PyTorch
 
 
