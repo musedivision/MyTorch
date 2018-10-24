@@ -3,7 +3,7 @@
 Learning me some PyTorch
 
 
-### Reproduce (docker)
+### Reproduce 🐳
 
 `npm start`
  
