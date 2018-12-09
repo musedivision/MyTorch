@@ -27,11 +27,11 @@ help: ## This help.
 
 up: build run
 
-compose:
+compose: ## compose
 	# launching docker containers
 	docker-compose up -d
 
-open:
+open: ## open
 	open http://localhost:8888
 
 build: ## Build the container
@@ -40,7 +40,7 @@ build: ## Build the container
 build-nc: ## Build the container without caching
 	docker build --no-cache -t $(PROJECT_NAME)-${FUNCTION_NAME} .
 
-run:
+run: ## run
 	docker run -d --rm \
 	-p 8888:8888 \
 	-e JUPYTER_ENABLE_LAB=no \
@@ -49,24 +49,33 @@ run:
 	$(PROJECT_NAME)-${FUNCTION_NAME} \
 	start-notebook.sh --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
 
-start:
+start: ## start
 	docker run -d --rm \
         -p 8889:8888 \
-        -e JUPYTER_ENABLE_LAB=yes \
+        -e JUPYTER_ENABLE_LAB=no \
         -v "$$PWD/volume":/home/jovyan \
-		-v "${shell cd .. && pwd}":/home/jovyan/code \
+				-v "${shell cd .. && pwd}/activity":/home/jovyan/activity \
+				-v "${shell cd .. && pwd}":/home/jovyan/code \
         --name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
         $(DOCKER_REPO)/$(PROJECT_NAME) \
         start-notebook.sh --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
+	sleep 3
 	open http://localhost:8889/
 
-clean:
-	docker stop $(PROJECT_NAME)-${FUNCTION_NAME} || true
+stop: ## stop
+	docker stop $(PROJECT_NAME)-${FUNCTION_NAME} $(DOCKER_REPO)/$(PROJECT_NAME) || true
 
-clean_images:
-	docker rmi -f $(PROJECT_NAME)-${FUNCTION_NAME}
+clean_images: ## clean_images
+	docker rmi -f $(PROJECT_NAME)-${FUNCTION_NAME} $(DOCKER_REPO)/$(PROJECT_NAME) || true
+
+bash: ## bash
+	docker exec -it $(PROJECT_NAME)-${FUNCTION_NAME} /bin/bash
 
 #######################################################################################################################
-#   DEPLOYMENT   -- maybe i could upload to docker hub                                                                                                       #
+#   DEPLOYMENT   -- maybe i could upload to docker hub    
+#
+#  Currently consists of automated docker build on push to master
+#  takes so long to install pip dependencies
+#                                                                                                   #
 ########################################################################################################################
 

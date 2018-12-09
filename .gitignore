@@ -16,3 +16,5 @@ volume/.jupyter
 .config
 pyvenv.cfg
 .password
+volume/.python_history
+volume/.yarnrc
