@@ -17,5 +17,6 @@ RUN conda install --yes --file /tmp/requirements.txt && \
     fix-permissions /home/$NB_USER
 
 RUN jupyter labextension install jupyterlab_vim
+RUN jupyter lab build
 #COPY volume/. /home/jovyan/work/.
 
