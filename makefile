@@ -56,6 +56,7 @@ start: ## start
         -v "$$PWD/volume":/home/jovyan \
 				-v "${shell cd .. && pwd}/activity":/home/jovyan/activity \
 				-v "${shell cd .. && pwd}":/home/jovyan/code \
+				-v $$HOME/data:/home/jovyan/data \
         --name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
         $(DOCKER_REPO)/$(PROJECT_NAME) \
         start-notebook.sh --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'

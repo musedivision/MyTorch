@@ -1,7 +1,7 @@
 FROM jupyter/minimal-notebook
 
 # install pytorch
-RUN conda install pytorch -c pytorch
+RUN conda install -c pytorch pytorch torchvision
 
 # install dependencies
 RUN echo "\
@@ -15,6 +15,8 @@ pathlib2==2.3.0" > /tmp/requirements.txt
 RUN conda install --yes --file /tmp/requirements.txt && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+RUN conda install -c fastai fastai
 
 RUN jupyter labextension install jupyterlab_vim
 RUN jupyter lab build
