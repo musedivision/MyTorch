@@ -1,7 +1,7 @@
-FROM jupyter/minimal-notebook
+FROM musedivision/buda 
 
 # install pytorch
-RUN conda install -c pytorch pytorch torchvision
+RUN conda install --yes -c pytorch pytorch torchvision
 
 # install dependencies
 RUN echo "\
@@ -16,8 +16,9 @@ RUN conda install --yes --file /tmp/requirements.txt && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-RUN conda install -c fastai fastai
+RUN conda install --yes -c fastai fastai
 
+# enable vim 
 RUN jupyter labextension install jupyterlab_vim
 RUN jupyter lab build
 #COPY volume/. /home/jovyan/work/.
