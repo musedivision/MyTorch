@@ -1,5 +1,8 @@
 FROM musedivision/buda 
 
+# set conda 
+ENV PATH=/opt/conda/bin:$PATH
+ENV PATH=$PATH:~/.local/bin
 # install pytorch
 RUN conda install --yes -c pytorch pytorch torchvision
 
@@ -12,14 +15,12 @@ pandas==0.22.0 \n\
 tqdm==4.28.1 \n\
 pathlib2==2.3.0" > /tmp/requirements.txt
 
-RUN conda install --yes --file /tmp/requirements.txt && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+RUN conda install --yes --file /tmp/requirements.txt 
 
 RUN conda install --yes -c fastai fastai
 
 # enable vim 
-RUN jupyter labextension install jupyterlab_vim
-RUN jupyter lab build
+#RUN jupyter labextension install jupyterlab_vim
+#RUN jupyter lab build
 #COPY volume/. /home/jovyan/work/.
 

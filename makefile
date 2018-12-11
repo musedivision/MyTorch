@@ -40,28 +40,23 @@ build: ## Build the container
 build-nc: ## Build the container without caching
 	docker build --no-cache -t $(PROJECT_NAME)-${FUNCTION_NAME} .
 
-run: ## run
+run:
 	docker run -d --rm \
-	-p 8888:8888 \
-	-e JUPYTER_ENABLE_LAB=no \
-	-v "$$PWD/volume":/home/jovyan \
-	--name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
-	$(PROJECT_NAME)-${FUNCTION_NAME} \
-	start-notebook.sh --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
+					-p 8889:8888 \
+					-e JUPYTER_ENABLE_LAB=no \
+					-v "$$PWD/volume":/home/jovyan \
+					-v "${shell cd .. && pwd}/activity":/home/jovyan/activity \
+					-v "${shell cd .. && pwd}":/home/jovyan/code \
+					-v $$HOME/data:/home/jovyan/data \
+					--name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
+					${cont} 
+					jupyter lab --no-browser --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
 
-start: ## start
-	docker run -d --rm \
-        -p 8889:8888 \
-        -e JUPYTER_ENABLE_LAB=no \
-        -v "$$PWD/volume":/home/jovyan \
-				-v "${shell cd .. && pwd}/activity":/home/jovyan/activity \
-				-v "${shell cd .. && pwd}":/home/jovyan/code \
-				-v $$HOME/data:/home/jovyan/data \
-        --name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
-        $(DOCKER_REPO)/$(PROJECT_NAME) \
-        start-notebook.sh --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
-	sleep 3
-	open http://localhost:8889/
+start-local: ## run local build
+	${MAKE} run cont=$(PROJECT_NAME)-${FUNCTION_NAME} 
+
+start: ## start dockerhub container
+	${MAKE} run cont=$(DOCKER_REPO)/$(PROJECT_NAME) 
 
 stop: ## stop
 	docker stop $(PROJECT_NAME)-${FUNCTION_NAME} $(DOCKER_REPO)/$(PROJECT_NAME) || true
