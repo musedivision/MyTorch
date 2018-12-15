@@ -9,10 +9,11 @@ SHELL:=/bin/bash
 export PUBLIC_PORT := 8888
 
 export VERSION											:= 3
-export PROJECT_NAME										:= mytorch
-export FUNCTION_NAME									:= lab
-export NETWORK_NAME                                     := fastai
-export DOCKER_REPO										:= musedivision
+export PROJECT_NAME								  := mytorch
+export FUNCTION_NAME								:= lab
+export NETWORK_NAME                 := fastai
+export DOCKER_REPO									:= musedivision
+export WORK_DIR											:=/home/ubuntu/code/MyTorch
 
 help: ## This help.
 	@echo "CURRENT VERSION: ${VERSION}"
@@ -44,10 +45,8 @@ run:
 	docker run -d --rm \
 					-p 8889:8888 \
 					-e JUPYTER_ENABLE_LAB=no \
-					-v "$$PWD/volume":/home/jovyan \
-					-v "${shell cd .. && pwd}/activity":/home/jovyan/activity \
-					-v "${shell cd .. && pwd}":/home/jovyan/code \
-					-v $$HOME/data:/home/jovyan/data \
+					-v $$HOME/data:${WORK_DIR}/data \
+					-v $$HOME/code:${WORK_DIR}/code \
 					--name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
 					${cont} 
 					jupyter lab --no-browser --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
