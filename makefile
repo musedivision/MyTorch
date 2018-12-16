@@ -13,7 +13,7 @@ export PROJECT_NAME								  := mytorch
 export FUNCTION_NAME								:= lab
 export NETWORK_NAME                 := fastai
 export DOCKER_REPO									:= musedivision
-export WORK_DIR											:=/home/ubuntu/code/MyTorch
+export WORK_DIR											:=/home/ubuntu/
 
 help: ## This help.
 	@echo "CURRENT VERSION: ${VERSION}"
@@ -47,9 +47,10 @@ run:
 					-e JUPYTER_ENABLE_LAB=no \
 					-v $$HOME/data:${WORK_DIR}/data \
 					-v $$HOME/code:${WORK_DIR}/code \
+					-v $$HOME/data/fastai:/root/.fastai \
 					--name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
-					${cont} 
-					jupyter lab --no-browser --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
+					${cont} \
+					jupyter notebook --no-browser --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
 
 start-local: ## run local build
 	${MAKE} run cont=$(PROJECT_NAME)-${FUNCTION_NAME} 

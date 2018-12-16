@@ -19,3 +19,6 @@ pyvenv.cfg
 volume/.python_history
 volume/.yarnrc
 volume/.conda/
+.ipynb_checkpoints/
+volume/
+volume/*
