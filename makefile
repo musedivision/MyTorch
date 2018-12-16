@@ -41,6 +41,9 @@ build: ## Build the container
 build-nc: ## Build the container without caching
 	docker build --no-cache -t $(PROJECT_NAME)-${FUNCTION_NAME} .
 
+restart: ## restart container
+	${MAKE} stop start-local
+
 run:
 	docker run -d --rm \
 					-p 8889:8888 \
@@ -48,6 +51,7 @@ run:
 					-v $$HOME/data:${WORK_DIR}/data \
 					-v $$HOME/code:${WORK_DIR}/code \
 					-v $$HOME/data/fastai:/root/.fastai \
+					-v $$HOME/data/torch:/root/.torch \
 					--name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
 					${cont} \
 					jupyter notebook --no-browser --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
