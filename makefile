@@ -52,6 +52,9 @@ run:
 					-v $$HOME/code:${WORK_DIR}/code \
 					-v $$HOME/data/fastai:/root/.fastai \
 					-v $$HOME/data/torch:/root/.torch \
+					--ipc=host \
+					--shm-size 50G \
+					--runtime=nvidia \
 					--name="$(PROJECT_NAME)-${FUNCTION_NAME}" \
 					${cont} \
 					jupyter notebook --no-browser --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.password='${JUPYTER_PASSWORD_SHA}'
