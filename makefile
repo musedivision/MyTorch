@@ -47,6 +47,8 @@ restart: ## restart container
 run:
 	docker run -d --rm \
 					-p 8889:8888 \
+					-e LANG=C.UTF-8 \
+					-e LC_ALL=C.UTF-8 \
 					-e JUPYTER_ENABLE_LAB=no \
 					-v $$HOME/data:${WORK_DIR}/data \
 					-v $$HOME/code:${WORK_DIR}/code \
