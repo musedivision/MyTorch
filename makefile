@@ -38,6 +38,9 @@ help: ## This help.
 
 up: build run
 
+venv:
+	source ${PROJECT_NAME}/bin/activate
+
 compose: ## compose
 	# launching docker containers
 	docker-compose up -d
