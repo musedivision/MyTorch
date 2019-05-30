@@ -17,7 +17,7 @@ pathlib2==2.3.0" > /tmp/requirements.txt
 
 RUN conda install --yes --file /tmp/requirements.txt 
 
-RUN conda install --yes -c fastai fastai
+RUN conda install --yes -c fastai fastai=1.0.52
 RUN conda install --yes -c pytorch pytorch torchvision
 
 RUN pip install jupyter-contrib-nbextensions==0.5.1
